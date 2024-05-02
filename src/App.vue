@@ -1,52 +1,42 @@
 <template>
   <header>
     <div class="wrapper">
-      <p v-for="(name, index) in data" :key="name">{{ index + 1 }}. {{ name }}</p>
+      <ListStudentName v-for="(obj, index) in renderName" :key="obj" :name="obj" :no="index + 1">
+      </ListStudentName>
 
-      <!-- <div :class="highLightBorder">
-        <p>Press the print field button</p>
-      </div>
-      <p v-if="trackTarget">Input: {{ trackTarget }}</p>
-      <p v-else>Empty Input</p>
-
-      <button @click="increment">Click me to increment</button>
-      <button @click="printField">print field</button> -->
-      <button @click="insertRandom">Press me</button>
+      <InsertFieldVue @InsertName="insertname"></InsertFieldVue>
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import ListStudentName from './views/ListStudentName.vue'
+import InsertFieldVue from './views/InsertFieldVue.vue'
 
 const data = ref([
-  'Tola',
-  'Tola',
-  'rithiya',
-  'nita',
-  'niza',
-  'phanith',
-  'votana',
-  'chheung',
-  'manuth'
+  { name: 'Tola', age: 18 },
+  { name: 'rithiya', age: 18 },
+  { name: 'nita', age: 20 },
+  { name: 'niza', age: 21 },
+  { name: 'phanith', age: 22 },
+  { name: 'votana', age: 23 },
+  { name: 'chheung', age: 24 },
+  { name: 'manuth', age: 25 }
 ])
-const i = ref(0)
 
-function insertRandom() {
-  i.value ="Tola"
-  data.value.push(i.value)
+const renderName = computed(() => {
+  const tmp = []
+  for (let i = 0; i < data.value.length; i++) {
+    tmp.push(data.value[i].name)
+  }
+  return tmp
+})
+
+const insertname = (value) => {
+  const obj = { name: value }
+  data.value.push(obj)
 }
-
-// const trackTarget = ref(0)
-// const highLightBorder = ref("redBorder")
-// function increment() {
-//   trackTarget.value = trackTarget.value + 1
-// }
-
-// function printField(){
-//   highLightBorder.value = "";
-//   console.log(trackTarget.value);
-// }
 </script>
 
 <style scoped>
