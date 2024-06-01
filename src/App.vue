@@ -1,10 +1,15 @@
 <template>
   <header>
     <div class="wrapper">
-      {{ t }}
-      <!-- <button @click="() => (t = 'Ya')">Press here</button>
-      <button @click="y">Press here</button> -->
-      <button @click="(event) => y(event, 'Ya')">Press here</button>
+      <p v-for="(name, index) in names" :key="index">{{ index + 1 }} - {{ name }}</p>
+      <input v-model="y" />
+      <p v-if="z != null && z != ''">{{ z }}</p>
+      <button @click="showInput">Click Me</button>
+      <button @click="reset">Reset</button>
+      <!-- {{ t }}
+      <button @click="() => (t = 'Ya')">Press here</button>
+      <button @click="y">Press here</button>
+      <button @click="(event) => y(event, 'Ya')">Press here</button> -->
     </div>
   </header>
 </template>
@@ -12,14 +17,34 @@
 <script setup>
 import { ref } from 'vue'
 
-let t = ref('Tola')
+const names = ref(['tola', 'yaya'])
+const y = ref(null)
+const z = ref(null)
 
-const y = (event, name) => (t.value = name)
-
-function printHelloWorld(event) {
-  console.log(event)
-  console.log('Hello World')
+function showInput() {
+  y.value = y.value?.trim()
+  if (y.value != null && y.value != '') {
+    //x.value = y.value
+    names.value.push(y.value)
+    z.value = null
+  } else {
+    z.value = 'please input'
+  }
 }
+
+function reset() {
+  y.value = ''
+  names.value = ['tola', 'yaya']
+}
+// let t = ref('Tola')
+
+// const y = (event, name) => (t.value = name)
+
+// function printHelloWorld(event) {
+//   console.log(event)
+//   console.log('Hello World')
+// }
+
 // console.log(printHelloWorld)
 // console.log(printHelloWorld())
 // const x = printHelloWorld()

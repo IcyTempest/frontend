@@ -1,12 +1,7 @@
-let i = "0";
-
-if(i){
-    console.log("this is true inside")
-}else{
-    console.log("this is wrong")
+for (let i = 1; i <= 5; i++) {
+  for (let j = 1; j <= i; j++) {
+    // eslint-disable-next-line no-undef
+    process.stdout.write(`${j}`)
+  }
+  console.log('')
 }
-
-
-let j = 0;
-
-console.log(`${i} === ${j}, ${i===j}`);
