@@ -1,22 +1,17 @@
 <template>
   <header>
-    <div class="wrapper">
-      <div class="decor" v-for="(sentence, index) in refactorData" :key="index"> {{ sentence }} </div>
-
-
-      <p></p>
-      <p></p>
-      <button @click="insertNameIntoList">Press me</button>
-      <p></p>
-      <input v-model="input" placeholder="Enter me" />
-    </div>
+    <dev class="decor">
+      <HeaderView :data="data"></HeaderView>
+      <FooterView @click="insertName"></FooterView>
+    </dev>
   </header>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
+import HeaderView from './views/HomePage/components/HeaderView.vue'
+import FooterView from './views/HomePage/components/FooterView.vue'
 
-const input = ref("");
 const data = ref([
   'Tola',
   'Tola',
@@ -29,53 +24,10 @@ const data = ref([
   'manuth'
 ])
 
-const refactorData = computed(()=>{
-  const newData = [];
-  for (let i = 0; i < data.value.length; i++) {
-    const newSentence = `${i+1}. ${capitalizeFirstLetter(data.value[i].name)}`;
-    newData.push(newSentence);
-  }
-  return newData
-})
-
-// function refactorData() {
-//   console.log("running new operation");
-//   const newData = [];
-//   for (let i = 0; i < data.value.length; i++) {
-//     const newSentence = `${i+1}. ${capitalizeFirstLetter(data.value[i].name)}`;
-//     console.log(newSentence)
-//     newData.push(newSentence);
-//   }
-
-//   console.log("ending operation")
-//   return newData
-// }
-
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+function insertName(value) {
+  data.value.push(value)
 }
 
-
-function insertNameIntoList() {
-  const rise = {
-    name: input.value
-  }
-  data.value.push(rise)
-
-  console.log(input.value)
-}
-
-// const trackTarget = ref(0)
-// const highLightBorder = ref("redBorder")
-// function increment() {
-//   trackTarget.value = trackTarget.value + 1
-// }
-
-// function printField(){
-//   highLightBorder.value = "";
-//   console.log(trackTarget.value);
-// }
 </script>
 
 <style scoped>
