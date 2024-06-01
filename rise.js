@@ -1,12 +1,8 @@
-let i = "0";
-
-if(i){
-    console.log("this is true inside")
-}else{
-    console.log("this is wrong")
+let list = [];
+let i = 0;
+while (i<10){
+    list.push(i);
+    i++;
 }
 
-
-let j = 0;
-
-console.log(`${i} === ${j}, ${i===j}`);
+console.log(list);

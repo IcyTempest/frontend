@@ -1,24 +1,22 @@
 <template>
   <header>
     <div class="wrapper">
-      <p v-for="(name, index) in data" :key="name">{{ index + 1 }}. {{ name }}</p>
+      <div class="decor" v-for="(sentence, index) in refactorData" :key="index"> {{ sentence }} </div>
 
-      <!-- <div :class="highLightBorder">
-        <p>Press the print field button</p>
-      </div>
-      <p v-if="trackTarget">Input: {{ trackTarget }}</p>
-      <p v-else>Empty Input</p>
 
-      <button @click="increment">Click me to increment</button>
-      <button @click="printField">print field</button> -->
-      <button @click="insertRandom">Press me</button>
+      <p></p>
+      <p></p>
+      <button @click="insertNameIntoList">Press me</button>
+      <p></p>
+      <input v-model="input" placeholder="Enter me" />
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
+const input = ref("");
 const data = ref([
   'Tola',
   'Tola',
@@ -30,11 +28,42 @@ const data = ref([
   'chheung',
   'manuth'
 ])
-const i = ref(0)
 
-function insertRandom() {
-  i.value ="Tola"
-  data.value.push(i.value)
+const refactorData = computed(()=>{
+  const newData = [];
+  for (let i = 0; i < data.value.length; i++) {
+    const newSentence = `${i+1}. ${capitalizeFirstLetter(data.value[i].name)}`;
+    newData.push(newSentence);
+  }
+  return newData
+})
+
+// function refactorData() {
+//   console.log("running new operation");
+//   const newData = [];
+//   for (let i = 0; i < data.value.length; i++) {
+//     const newSentence = `${i+1}. ${capitalizeFirstLetter(data.value[i].name)}`;
+//     console.log(newSentence)
+//     newData.push(newSentence);
+//   }
+
+//   console.log("ending operation")
+//   return newData
+// }
+
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+function insertNameIntoList() {
+  const rise = {
+    name: input.value
+  }
+  data.value.push(rise)
+
+  console.log(input.value)
 }
 
 // const trackTarget = ref(0)
@@ -55,6 +84,7 @@ function insertRandom() {
   height: 100px;
   background-color: red;
 }
+
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -71,6 +101,7 @@ header {
   align-items: center;
   flex-direction: column;
 }
+
 .wrapper p {
   margin-bottom: 15px;
 }
