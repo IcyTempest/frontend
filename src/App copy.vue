@@ -1,54 +1,42 @@
 <template>
   <header>
     <div class="wrapper">
-      <p v-for="(name, index) in names" :key="index">{{ index + 1 }} - {{ name }}</p>
-      <input v-model="y" />
-      <p v-if="z != null && z != ''">{{ z }}</p>
-      <button @click="showInput">Click Me</button>
-      <button @click="reset">Reset</button>
-      <!-- {{ t }}
-      <button @click="() => (t = 'Ya')">Press here</button>
-      <button @click="y">Press here</button>
-      <button @click="(event) => y(event, 'Ya')">Press here</button> -->
+      <ListStudentName v-for="(obj, index) in renderName" :key="obj" :name="obj" :no="index + 1">
+      </ListStudentName>
+
+      <InsertFieldVue @InsertName="insertname"></InsertFieldVue>
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import ListStudentName from './views/ListStudentName.vue'
+import InsertFieldVue from './views/InsertFieldVue.vue'
 
-const names = ref(['tola', 'yaya'])
-const y = ref(null)
-const z = ref(null)
+const data = ref([
+  { name: 'Tola', age: 18 },
+  { name: 'rithiya', age: 18 },
+  { name: 'nita', age: 20 },
+  { name: 'niza', age: 21 },
+  { name: 'phanith', age: 22 },
+  { name: 'votana', age: 23 },
+  { name: 'chheung', age: 24 },
+  { name: 'manuth', age: 25 }
+])
 
-function showInput() {
-  y.value = y.value?.trim()
-  if (y.value != null && y.value != '') {
-    //x.value = y.value
-    names.value.push(y.value)
-    z.value = null
-  } else {
-    z.value = 'please input'
+const renderName = computed(() => {
+  const tmp = []
+  for (let i = 0; i < data.value.length; i++) {
+    tmp.push(data.value[i].name)
   }
+  return tmp
+})
+
+const insertname = (value) => {
+  const obj = { name: value }
+  data.value.push(obj)
 }
-
-function reset() {
-  y.value = ''
-  names.value = ['tola', 'yaya']
-}
-// let t = ref('Tola')
-
-// const y = (event, name) => (t.value = name)
-
-// function printHelloWorld(event) {
-//   console.log(event)
-//   console.log('Hello World')
-// }
-
-// console.log(printHelloWorld)
-// console.log(printHelloWorld())
-// const x = printHelloWorld()
-// console.log(x)
 </script>
 
 <style scoped>
