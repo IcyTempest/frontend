@@ -1,28 +1,38 @@
 <template>
   <header>
-    <dev class="decor">
-      <HeaderView :data="data"></HeaderView>
+    <div class="decor">
+      <HeaderView :data="refactorData"></HeaderView>
       <FooterView @click="insertName"></FooterView>
-    </dev>
+    </div>
   </header>
-</template>
+</template> 
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import HeaderView from './views/HomePage/components/HeaderView.vue'
 import FooterView from './views/HomePage/components/FooterView.vue'
 
 const data = ref([
   'Tola',
-  'Tola',
+  '',
   'rithiya',
   'nita',
-  'niza',
+  null,
   'phanith',
   'votana',
   'chheung',
   'manuth'
 ])
+
+const refactorData = computed(()=>{
+  const list = [];
+  data.value.map((e)=>{
+    if (e){
+      list.push(e);
+    }
+  });
+  return list;
+})
 
 function insertName(value) {
   data.value.push(value)
